@@ -1,6 +1,6 @@
-# myapp
+# Flutter Tutorial
 
-A new Flutter project.
+Just playing with flutter. This baby is running on Linux, Android, Web, Windows, IOS. Respect!
 
 ## Getting Started
 
