@@ -37,6 +37,31 @@ class _RandomWordsState extends State<RandomWords> {
     });
   }
 
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) {
+          final tiles = _saved.map((pair) {
+            return ListTile(
+                title: Text(
+              pair.join(' ').toTitleCase(),
+              style: _biggerFont,
+            ));
+          });
+          final divided = tiles.isNotEmpty
+              ? ListTile.divideTiles(tiles: tiles, context: context).toList()
+              : <Widget>[];
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Saved pairs'),
+            ),
+            body: ListView(children: divided),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return ListTile(
@@ -53,25 +78,36 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 
+  Widget _buildSuggestions() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i) {
+        if (i.isOdd) return const Divider();
+        final index = i ~/ 2;
+
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+
+        return _buildRow(_suggestions[index]);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Word Pair Generator"),
+        actions: [
+          IconButton(
+            onPressed: _pushSaved,
+            icon: const Icon(Icons.list),
+            tooltip: 'Saved Pairs',
+          )
+        ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: (context, i) {
-          if (i.isOdd) return const Divider();
-          final index = i ~/ 2;
-
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10));
-          }
-
-          return _buildRow(_suggestions[index]);
-        },
-      ),
+      body: _buildSuggestions(),
     );
   }
 }
