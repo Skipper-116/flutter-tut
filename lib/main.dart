@@ -28,7 +28,23 @@ class RandomWords extends StatefulWidget {
 
 class _RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
+  final _saved = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
+    return ListTile(
+      title: Text(
+        pair.join(' ').toTitleCase(),
+        style: _biggerFont,
+      ),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+        semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +62,7 @@ class _RandomWordsState extends State<RandomWords> {
             _suggestions.addAll(generateWordPairs().take(10));
           }
 
-          return ListTile(
-            title: Text(
-              _suggestions[index].join(' ').toTitleCase(),
-              style: _biggerFont,
-            ),
-          );
+          return _buildRow(_suggestions[index]);
         },
       ),
     );
