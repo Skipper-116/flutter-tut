@@ -71,6 +71,23 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 
+  void _about() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('About'),
+            ),
+            body: const Center(
+              child: Text('Just a simple flutter tutorial.'),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return ListTile(
@@ -113,6 +130,13 @@ class _RandomWordsState extends State<RandomWords> {
             onPressed: _pushSaved,
             icon: const Icon(Icons.list),
             tooltip: 'Saved Pairs',
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.help,
+            ),
+            onPressed: _about,
+            tooltip: 'About',
           )
         ],
       ),
