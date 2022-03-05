@@ -31,6 +31,12 @@ class _RandomWordsState extends State<RandomWords> {
   final _saved = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
+  void _handleTap(bool alreadySaved, WordPair pair) {
+    setState(() {
+      alreadySaved ? _saved.remove(pair) : _saved.add(pair);
+    });
+  }
+
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
     return ListTile(
@@ -43,6 +49,7 @@ class _RandomWordsState extends State<RandomWords> {
         color: alreadySaved ? Colors.red : null,
         semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
       ),
+      onTap: () => _handleTap(alreadySaved, pair),
     );
   }
 
