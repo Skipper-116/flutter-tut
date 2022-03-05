@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'string_casing_extension.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
@@ -47,7 +48,7 @@ class _RandomWordsState extends State<RandomWords> {
 
           return ListTile(
             title: Text(
-              _suggestions[index].join(' '),
+              _suggestions[index].join(' ').toTitleCase(),
               style: _biggerFont,
             ),
           );
