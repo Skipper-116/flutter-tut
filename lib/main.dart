@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Fuckers', home: RandomWords());
+    return const MaterialApp(title: 'Word Pair Generator', home: RandomWords());
   }
 }
 
@@ -47,7 +47,7 @@ class _RandomWordsState extends State<RandomWords> {
 
           return ListTile(
             title: Text(
-              _suggestions[index].asPascalCase,
+              _suggestions[index].join(' '),
               style: _biggerFont,
             ),
           );
